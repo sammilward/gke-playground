@@ -18,7 +18,7 @@ docker build . -t maths-api
 
 To run the container
 ```
-docker run -p 5000:5000 math-api
+docker run -d -p 5000:5000 math-api
 ```
 
 Example curl to test

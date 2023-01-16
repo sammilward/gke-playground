@@ -1,0 +1,21 @@
+services:
+  math-api:
+    image: math-api
+    build: ./math-api
+    ports:
+      - "5000:5000"
+    networks:
+      - my-bridge-net
+
+  loadgenerator:
+    image: loadgenerator
+    build: ./loadgenerator
+    networks:
+      - my-bridge-net
+    environment:
+      - SERVER_ADDR=http://math-api:5000
+      - REQUESTS_PER_SECOND=5
+
+networks:
+  # The presence of these objects is sufficient to define them
+  my-bridge-net: {}
