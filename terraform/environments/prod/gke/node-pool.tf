@@ -26,10 +26,10 @@ resource "google_container_node_pool" "primary_nodes" {
     metadata = {
       disable-legacy-endpoints = "true"
     }
+  }
 
-    autoscaling {
-      min_node_count = local.min_node_count
-      max_node_count = local.max_node_count
-    }
+  autoscaling {
+    min_node_count = var.min_node_count
+    max_node_count = var.max_node_count
   }
 }
