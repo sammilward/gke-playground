@@ -3,6 +3,11 @@ variable "project_id" {
   default     = "gke-playground-374709"
 }
 
+variable "cluster_name" {
+  type        = string
+  default     = "gke-playground-374709-gke"
+}
+
 variable "region" {
   type        = string
   default     = "europe-west1-b"
