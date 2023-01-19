@@ -25,19 +25,18 @@ spec:
         - name: math-api
           image: gcr.io/gke-playground-374709/maths-api@sha256:e8ae417d260cba841198da9b5ac95c6364ed5305436b552b04bd3e836198795e
 ---
-apiVersion: "v1"
-kind: "Service"
+apiVersion: v1
+kind: Service
 metadata:
-  name: "math-api-service"
-  namespace: "sam"
+  name: math-api-service
+  namespace: sam
   labels:
-    app: "math-api"
+    app: math-api
 spec:
   ports:
-   - port: 80
-     targetPort: 5000
-     name: http
+  - name: http
+    port: 80
+    targetPort: 5000
   selector:
-    app: "math-api"
-  type: LoadBalancer
-  loadBalancerIP: ""
+    app: math-api
+  type: ClusterIP

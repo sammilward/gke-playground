@@ -1,9 +1,18 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: sam
+  labels:
+    name: sam
+    istio-injection: enabled
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: loadgenerator
+  namespace: sam
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: loadgenerator
@@ -18,7 +27,7 @@ spec:
           value: http://math-api-service:80
         - name: REQUESTS_PER_SECOND
           value: '10'
-        image: gcr.io/google-samples/istio/loadgen:latest
+        image: gcr.io/gke-playground-374709/loadgenerator@sha256:0adb8e55008478d232a587c987303df316fe357cdd3b2389e8015e959556195c
         imagePullPolicy: Always
         name: main
         resources:
@@ -34,7 +43,8 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: loadgensvc
+  name: loadgen-service
+  namespace: sam
 spec:
   ports:
   - name: http

@@ -6,6 +6,10 @@ module "asm" {
   # enable_fleet_registration = true
   enable_mesh_feature = true
   enable_cni          = true
+
+  depends_on = [
+    google_container_cluster.primary
+  ]
 }
 
 # output "gateway_ip" {

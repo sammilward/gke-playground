@@ -7,4 +7,8 @@ module "fleet_membership" {
   # Leaving this blank becomes <proj>-<region>-<cluster name> which is > max 63 chars
   membership_name = var.cluster_name
   #enable_mesh_auto_controlplane_management = true
+
+  depends_on = [
+    google_container_cluster.primary
+  ]
 }
