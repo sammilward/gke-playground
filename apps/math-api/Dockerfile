@@ -2,6 +2,9 @@
 
 FROM python:3.8-slim-buster
 
+# Enable unbuffered logging
+ENV PYTHONUNBUFFERED=1
+
 WORKDIR /python-docker
 
 COPY requirements.txt requirements.txt

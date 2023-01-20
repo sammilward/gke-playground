@@ -1,4 +1,6 @@
 from flask import Flask
+import time
+
 app = Flask(__name__)
 
 @app.route('/')
@@ -7,7 +9,12 @@ def hello_geek():
 
 @app.route('/largest-prime-factor/<num>')
 def get_largest_prime_factor(num):
-    return str(largest_prime_factor(int(num)))
+    start_time = time.time()
+    ans = str(largest_prime_factor(int(num)))
+    end_time = time.time()
+    taken_time = end_time - start_time
+    print("request='" + num + "' response='" + ans + "' request_digets='" + str(len(num)) + "' time_taken='" + str(taken_time) + "'")
+    return ans
 
 def largest_prime_factor(n):
     i = 2
