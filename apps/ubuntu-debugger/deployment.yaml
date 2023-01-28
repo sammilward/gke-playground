@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ubuntu-debugger
+  namespace: sam
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ubuntu-debugger
+  template:
+    metadata:
+      labels:
+        app: ubuntu-debugger
+    spec:
+      containers:
+        - name: ubuntu-debugger
+          image: gcr.io/gke-playground-374709/ubuntu-debugger:latest
