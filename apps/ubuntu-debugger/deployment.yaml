@@ -15,4 +15,4 @@ spec:
     spec:
       containers:
         - name: ubuntu-debugger
-          image: gcr.io/gke-playground-374709/ubuntu-debugger:latest
+          image: europe-west2-docker.pkg.dev/sams-sandbox-projects-12345/sams-registry/ubuntu-debugger:latest
