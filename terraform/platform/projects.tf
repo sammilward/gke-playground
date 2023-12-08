@@ -8,13 +8,18 @@ locals {
   services = toset([
     "iam.googleapis.com",
     "compute.googleapis.com",
-    "container.googleapis.com"
+    "container.googleapis.com",
+    "dns.googleapis.com",
+    "gkehub.googleapis.com",
+    "secretmanager.googleapis.com",
+    "meshconfig.googleapis.com",
+    "anthos.googleapis.com"
   ])
 }
 
 resource "google_project_service" "services" {
   for_each                   = local.services
-  project                    = google_project.project.id
+  project                    = google_project.project.name
   service                    = each.key
   disable_dependent_services = true
   depends_on                 = [google_project.project]
