@@ -1,12 +1,11 @@
 resource "google_compute_network" "vpc_network" {
-  project                 = google_project.project.name
+  project                 = var.service_project_name
   name                    = "gke-net"
   auto_create_subnetworks = false
-  depends_on              = [google_project_service.services["compute.googleapis.com"]]
 }
 
 resource "google_compute_subnetwork" "gke" {
-  project       = var.project_id
+  project       = var.service_project_name
   name          = "gke"
   ip_cidr_range = "10.2.0.0/16"
   region        = var.region

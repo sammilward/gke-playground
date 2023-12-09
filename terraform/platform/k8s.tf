@@ -13,6 +13,7 @@ resource "kubernetes_namespace" "sam" {
       "istio-injection" = "enabled"
     }
   }
+  depends_on = [ google_container_node_pool.cluster1_primary ]
 }
 
 resource "kubernetes_deployment" "utility" {
@@ -35,17 +36,14 @@ resource "kubernetes_deployment" "utility" {
         labels = {
           "app" = "utility"
         }
-        annotations = {
-          "sidecar.istio.io/inject" = "false"
-        }
       }
       spec {
         container {
-          image = "europe-west2-docker.pkg.dev/sams-sandbox-projects-12345/sams-registry/ubuntu-debugger:latest"
+          image = "europe-west2-docker.pkg.dev/sams-service-project/sams-docker-registry/ubuntu-debugger:latest"
           name  = "utility"
         }
       }
     }
   }
-  depends_on = [kubernetes_namespace.sam]
+  depends_on = [kubernetes_namespace.sam, google_artifact_registry_repository_iam_member.member]
 }

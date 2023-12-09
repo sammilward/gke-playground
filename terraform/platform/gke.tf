@@ -1,12 +1,12 @@
 resource "google_container_cluster" "cluster1" {
-  project                  = google_project.project.name
+  project                  = var.service_project_name
   name                     = "cluster1"
   location                 = var.region
   remove_default_node_pool = true
   initial_node_count       = 1
 
   workload_identity_config {
-    workload_pool = "${google_project.project.name}.svc.id.goog"
+    workload_pool = "${var.service_project_name}.svc.id.goog"
   }
 
   node_config {
@@ -15,17 +15,11 @@ resource "google_container_cluster" "cluster1" {
     tags = ["gke-primary"]
   }
 
-  fleet {
-    project = google_project.project.name
-  }
-
   deletion_protection = false
-
-  depends_on = [google_project_service.services["container.googleapis.com"]]
 }
 
 resource "google_container_node_pool" "cluster1_primary" {
-  project    = google_project.project.name
+  project    = var.service_project_name
   name       = "primary"
   location   = var.region
   cluster    = google_container_cluster.cluster1.name
@@ -51,25 +45,25 @@ resource "google_container_node_pool" "cluster1_primary" {
 }
 
 resource "google_gke_hub_membership" "membership" {
-  project       = google_project.project.name
-  membership_id = "${google_project.project.name}-membership"
+  project       = var.service_project_name
+  membership_id = "${var.service_project_name}-membership"
   endpoint {
     gke_cluster {
       resource_link = google_container_cluster.cluster1.id
     }
   }
-  depends_on = [google_container_cluster.cluster1]
+  depends_on = [google_container_node_pool.cluster1_primary]
 }
 
 resource "google_gke_hub_feature" "asm" {
-  project    = google_project.project.name
+  project    = var.service_project_name
   name       = "servicemesh"
   location   = "global"
-  depends_on = [google_gke_hub_membership.membership, google_project_service.services["meshconfig.googleapis.com"]]
+  depends_on = [google_gke_hub_membership.membership]
 }
 
 resource "google_gke_hub_feature_membership" "feature_member" {
-  project    = google_project.project.name
+  project    = var.service_project_name
   location   = "global"
   feature    = google_gke_hub_feature.asm.name
   membership = google_gke_hub_membership.membership.membership_id

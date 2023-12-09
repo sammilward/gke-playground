@@ -1,0 +1,2 @@
+docker tag ubunutu-debugger europe-west2-docker.pkg.dev/sams-service-project/sams-docker-registry/ubuntu-debugger
+docker push europe-west2-docker.pkg.dev/sams-service-project/sams-docker-reistry/ubuntu-debugger
