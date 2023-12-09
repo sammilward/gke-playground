@@ -6,6 +6,11 @@ provider "kubernetes" {
   token                  = data.google_client_config.provider.access_token
 }
 
+resource "time_sleep" "asm_wait" {
+  depends_on = [google_gke_hub_feature_membership.feature_member]
+  create_duration = "600s"
+}
+
 resource "kubernetes_namespace" "sam" {
   metadata {
     name = "sam"
@@ -13,7 +18,7 @@ resource "kubernetes_namespace" "sam" {
       "istio-injection" = "enabled"
     }
   }
-  depends_on = [ google_container_node_pool.cluster1_primary ]
+  depends_on = [ time_sleep.asm_wait ]
 }
 
 resource "kubernetes_deployment" "utility" {

@@ -32,7 +32,8 @@ locals {
     "gkehub.googleapis.com",
     "secretmanager.googleapis.com",
     "meshconfig.googleapis.com",
-    "anthos.googleapis.com"
+    "anthos.googleapis.com",
+    "meshca.googleapis.com",
   ])
 }
 
