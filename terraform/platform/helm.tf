@@ -7,9 +7,10 @@ provider "helm" {
 }
 
 resource "helm_release" "istio_ingress_gateway" {
-  name       = "ingress"
+  provider   = helm
+  name       = "istio-ingressgateway"
   namespace  = "istio-system"
   repository = "https://istio-release.storage.googleapis.com/charts"
-  chart      = "istio-ingressgateway"
-  depends_on = [ time_sleep.asm_wait ]
+  chart      = "gateway"
+  depends_on = [time_sleep.asm_wait]
 }

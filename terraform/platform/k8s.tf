@@ -7,7 +7,7 @@ provider "kubernetes" {
 }
 
 resource "time_sleep" "asm_wait" {
-  depends_on = [google_gke_hub_feature_membership.feature_member]
+  depends_on      = [google_gke_hub_feature_membership.feature_member]
   create_duration = "600s"
 }
 
@@ -18,7 +18,7 @@ resource "kubernetes_namespace" "sam" {
       "istio-injection" = "enabled"
     }
   }
-  depends_on = [ time_sleep.asm_wait ]
+  depends_on = [helm_release.istio_ingress_gateway]
 }
 
 resource "kubernetes_deployment" "utility" {

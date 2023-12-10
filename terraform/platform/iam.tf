@@ -10,5 +10,5 @@ resource "google_artifact_registry_repository_iam_member" "member" {
   repository = var.registry_name
   role       = "roles/artifactregistry.reader"
   member     = "serviceAccount:${google_service_account.default_gke.email}"
-  depends_on = [ google_service_account.default_gke ]
+  depends_on = [google_service_account.default_gke]
 }

@@ -12,7 +12,7 @@ resource "google_container_cluster" "cluster1" {
   node_config {
     disk_size_gb = 10
     machine_type = "e2-standard-2"
-    tags = ["gke-primary"]
+    tags         = ["gke-primary"]
   }
 
   deletion_protection = false
