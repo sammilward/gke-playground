@@ -20,3 +20,10 @@ resource "google_compute_subnetwork" "gke" {
   }
   depends_on = [google_compute_network.vpc_network]
 }
+
+resource "google_compute_address" "istio_ingress_gateway_external" {
+  project      = var.service_project_name
+  name         = "istio-ingress-gateway-external"
+  address_type = "EXTERNAL"
+  region       = var.region
+}

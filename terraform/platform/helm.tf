@@ -12,5 +12,10 @@ resource "helm_release" "istio_ingress_gateway" {
   namespace  = "istio-system"
   repository = "https://istio-release.storage.googleapis.com/charts"
   chart      = "gateway"
-  depends_on = [time_sleep.asm_wait]
+
+  set {
+    name = "service.loadBalancerIP"
+    value = google_compute_address.istio_ingress_gateway_external.address
+  }
+  depends_on = [time_sleep.asm_wait, google_compute_address.istio_ingress_gateway_external]
 }
